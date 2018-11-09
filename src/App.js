@@ -6,8 +6,9 @@ class App extends Component {
     super();
     this.state = {
       data: [],
-      value: '',
+      value: '10000',
       isHidden: true,
+      shown: true,
     };
   }
 
@@ -24,40 +25,58 @@ class App extends Component {
         data: resJson.rates
       })
     })
-
+    
   }
-
+  //input data number currency
   handleChange(event) {
     event.preventDefault();
     this.setState({ value: event.target.value });
   };
-
-  handleHide(key) {
+  
+  //hide data currency
+  handleRemove(key) {
   // console.log(index);
    var x = document.getElementById(key);
     x.hidden = "hidden";
   }
 
+  //show input add currency
+  handleShow() {
+    this.setState({
+      shown: !this.state.shown
+    })
+  }
+
+  //add currency function
   handleAdd() {
-    
     var j = document.getElementById('addKey');
+    var l = document.getElementById('inputDiv');
+    var m = document.getElementById('buttonAdd');
     if(typeof j != undefined && j != null) {
       console.log(j.value);
-
+      
       if(j.value !== "") {
-      var k = document.getElementById(j.value);
-      k.hidden = "";
+        var k = document.getElementById(j.value);
+        k.hidden = "";
       }
     }
+    l.hidden = "hidden"
+    m.hidden = ""
   }
 
   render() {
     // console.log(`Render lifecycle: ${JSON.stringify(this.state)}`)
-    console.log(this.state.data)
+    // console.log(this.state.data)
     // Object.keys(this.state.data).map(key => console.log(key)); 
+    var shown = {
+      hidden: this.state.shown ? "" : "hidden"
+    };
+    var hide = {
+      hidden: this.state.shown ? "hidden" : ""
+    };
 
     return (
-      <div className="row mt-2">
+      <div className="row mt-2 mb-3">
         <div className="col">
           <div className="card">
             <div className="card-header">
@@ -65,7 +84,7 @@ class App extends Component {
                 <p>USD - United States Dollars</p>
                 <span>USD</span>
                 <span className="float-right">
-                  <input type="number" onChange={this.handleChange.bind(this)} />
+                  <input type="number" onChange={this.handleChange.bind(this)} value="10000" />
                 </span>
               </h5>
             </div>
@@ -88,16 +107,16 @@ class App extends Component {
                             </div>
                           </div>
 
-                          <p className="font-weight-bold"><em>{key} - </em></p>
+                          <p className="font-weight-bold"><em>{key} - No Currency name on API</em></p>
                           <p className="font-italic">1 USD = {key} {this.state.data[key]}</p>
                         </div>
                         <div className="col-2">
-                          <button className="btn btn-danger float-right" type="button" onClick={() => this.handleHide(key)}>-</button>
+                          <button className="btn btn-danger float-right" type="button" onClick={() => this.handleRemove(key)}>-</button>
                         </div>
                       </div>
                     </li>)
                     : (
-                    <li id={key} className="list-group-item" hidden>{index}
+                    <li id={key} className="list-group-item" hidden>
                       <div className="row">
                         <div className="col-10">
                           <div className="row">
@@ -109,11 +128,11 @@ class App extends Component {
                             </div>
                           </div>
 
-                          <p className="font-weight-bold"><em>{key} - </em></p>
+                          <p className="font-weight-bold"><em>{key} - No Currency name on API</em></p>
                           <p className="font-italic">1 USD = {key} {this.state.data[key]}</p>
                         </div>
                         <div className="col-2">
-                          <button className="btn btn-danger float-right" type="button" onClick={() => this.handleHide(key)}>-</button>
+                          <button className="btn btn-danger float-right" type="button" onClick={() => this.handleRemove(key)}>-</button>
                         </div>
                       </div>
                     </li>)
@@ -121,9 +140,10 @@ class App extends Component {
                 )}
 
               </ul>
-              <button className="btn btn-success btn-block">+ Add More Currencies</button>
-              <div className="input-group">
-                <input id="addKey" className="form-control" type="text" />
+              <button id="buttonAdd" className="btn btn-success btn-block" onClick={this.handleShow.bind(this)} {...shown}>+ Add More Currencies</button>
+              <br></br>
+              <div id="inputDiv" className="input-group" {...hide}>
+                <input id="addKey" className="form-control" type="text" placeholder="value must in UPPERCASE letter"/>
                 <div className="input-group-append">
                   <button className="btn btn-primary" type="button" onClick={() => this.handleAdd()}>Submit</button>
                 </div>
