@@ -62,6 +62,7 @@ class App extends Component {
     }
     l.hidden = "hidden"
     m.hidden = ""
+    j.value = ""
   }
 
   render() {
