@@ -7,8 +7,11 @@ class App extends Component {
     this.state = {
       data: [],
       value: '',
+      isHidden: true,
     };
   }
+
+  i = 1;
 
   keys = [];
   componentDidMount() {
@@ -28,6 +31,17 @@ class App extends Component {
     event.preventDefault();
     this.setState({ value: event.target.value });
   };
+
+  handleHide(key) {
+  // console.log(index);
+   var x = document.getElementById(key);
+    x.style.display = "none";
+  }
+
+  handleAdd(key) {
+    var j = document.getElementById(key);
+    j.style.display = "block";
+  }
 
   render() {
     // console.log(`Render lifecycle: ${JSON.stringify(this.state)}`)
@@ -52,9 +66,30 @@ class App extends Component {
 
                 {Object.keys(this.state.data).map(
                   // key => <div>{key} {this.state.data[key]}</div>
-                  key =>
+                  (key,index) => 
+                  index < 5 ? (
+                    <li id={key} className="list-group-item">
+                    <div className="row">
+                        <div className="col-10">
+                          <div className="row">
+                            <div className="col-7">
+                              <h5>{key}</h5>
+                            </div>
+                            <div className="col-5">
+                              <span className="float-right">{this.state.data[key] * this.state.value}</span>
+                            </div>
+                          </div>
 
-                    <li className="list-group-item">
+                          <p className="font-weight-bold"><em>{key} - </em></p>
+                          <p className="font-italic">1 USD = {key} {this.state.data[key]}</p>
+                        </div>
+                        <div className="col-2">
+                          <button className="btn btn-danger float-right" type="button" onClick={() => this.handleHide(key)}>-</button>
+                        </div>
+                      </div>
+                    </li>)
+                    : (
+                    <li id={key} className="list-group-item" hidden>{index}
                       <div className="row">
                         <div className="col-10">
                           <div className="row">
@@ -70,14 +105,17 @@ class App extends Component {
                           <p className="font-italic">1 USD = {key} {this.state.data[key]}</p>
                         </div>
                         <div className="col-2">
-                          <button className="btn btn-danger float-right" type="button">-</button>
+                          <button className="btn btn-danger float-right" type="button" onClick={() => this.handleHide(key)}>-</button>
                         </div>
                       </div>
-                    </li>
+                    </li>)
+
                 )}
 
               </ul>
               <button className="btn btn-success">+ Add More Currencies</button>
+              <input type="text" />
+              <button type="button">Submit</button>
             </div>
           </div>
         </div>
