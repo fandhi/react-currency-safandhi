@@ -35,12 +35,20 @@ class App extends Component {
   handleHide(key) {
   // console.log(index);
    var x = document.getElementById(key);
-    x.style.display = "none";
+    x.hidden = "hidden";
   }
 
-  handleAdd(key) {
-    var j = document.getElementById(key);
-    j.style.display = "block";
+  handleAdd() {
+    
+    var j = document.getElementById('addKey');
+    if(typeof j != undefined && j != null) {
+      console.log(j.value);
+
+      if(j.value !== "") {
+      var k = document.getElementById(j.value);
+      k.hidden = "";
+      }
+    }
   }
 
   render() {
@@ -113,9 +121,13 @@ class App extends Component {
                 )}
 
               </ul>
-              <button className="btn btn-success">+ Add More Currencies</button>
-              <input type="text" />
-              <button type="button">Submit</button>
+              <button className="btn btn-success btn-block">+ Add More Currencies</button>
+              <div className="input-group">
+                <input id="addKey" className="form-control" type="text" />
+                <div className="input-group-append">
+                  <button className="btn btn-primary" type="button" onClick={() => this.handleAdd()}>Submit</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
