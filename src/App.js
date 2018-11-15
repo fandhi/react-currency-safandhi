@@ -53,10 +53,10 @@ class App extends Component {
     var l = document.getElementById('inputDiv');
     var m = document.getElementById('buttonAdd');
     if(typeof j != undefined && j != null) {
-      console.log(j.value);
+      console.log(j.value.toUpperCase());
       
       if(j.value !== "") {
-        var k = document.getElementById(j.value);
+        var k = document.getElementById(j.value.toUpperCase());
         k.hidden = "";
       }
     }
@@ -145,6 +145,9 @@ class App extends Component {
               <br></br>
               <div id="inputDiv" className="input-group" {...hide}>
                 <input id="addKey" className="form-control" type="text" placeholder="value must in UPPERCASE letter"/>
+                <select>
+                  <option value=""></option>
+                </select>
                 <div className="input-group-append">
                   <button className="btn btn-primary" type="button" onClick={() => this.handleAdd()}>Submit</button>
                 </div>
